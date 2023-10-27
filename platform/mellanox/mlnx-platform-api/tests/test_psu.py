@@ -105,6 +105,7 @@ class TestPsu:
         assert psu.get_maximum_supplied_power() is None
 
         mock_sysfs_content[psu.psu_oper_status] = 1
+        mock_sysfs_content[psu.psu_voltage_capability] = 1
         assert psu.get_voltage() == 10.234
         assert psu.get_voltage_high_threshold() == 12.0
         assert psu.get_voltage_low_threshold() == 9.0
