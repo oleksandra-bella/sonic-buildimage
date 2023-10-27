@@ -79,6 +79,8 @@ class TestFan:
             fan.fan_speed_set_path: 153
         }
 
+        fan.get_presence = MagicMock(return_value=True)
+
         def mock_read_int_from_file(file_path, default=0, raise_exception=False):
             return mock_sysfs_content[file_path]
 
