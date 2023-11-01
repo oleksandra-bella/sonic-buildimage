@@ -68,6 +68,10 @@ class MlnxFan(FanBase):
             int: percentage of the max fan speed
         """
         speed = 0
+
+        if not self.get_presence():
+            return speed
+
         speed_in_rpm = utils.read_int_from_file(self.fan_speed_get_path)
 
         max_speed_in_rpm = utils.read_int_from_file(self.fan_max_speed_path)
