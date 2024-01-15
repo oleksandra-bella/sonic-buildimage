@@ -258,41 +258,48 @@ class Psu(FixedPsu):
 
     @property
     def psu_voltage(self):
-        if not self._psu_voltage:
-            psu_voltage_out = os.path.join(PSU_PATH, "power/psu{}_volt_out2".format(self.index))
-            if os.path.exists(psu_voltage_out):
-                self._psu_voltage = psu_voltage_out
-            else:
-                psu_voltage_out = os.path.join(PSU_PATH, "power/psu{}_volt".format(self.index))
-                if os.path.exists(psu_voltage_out):
-                    self._psu_voltage = psu_voltage_out
+        psu_volt_out2 = os.path.join(PSU_PATH, "power/psu{}_volt_out2".format(self.index))
+        psu_volt = os.path.join(PSU_PATH, "power/psu{}_volt".format(self.index))
+
+        if os.path.exists(psu_volt_out2):
+            self._psu_voltage = psu_volt_out2
+        elif os.path.exists(psu_volt):
+            self._psu_voltage = psu_volt
+        else:
+            self._psu_voltage = None
 
         return self._psu_voltage
 
     @property
     def psu_voltage_min(self):
-        if not self._psu_voltage_min:
-            psu_voltage = self.psu_voltage
-            if psu_voltage:
-                self._psu_voltage_min = psu_voltage + "_min"
+        if self.psu_voltage:
+            psu_voltage_min_path = self.psu_voltage + "_min"
+            if os.path.exists(psu_voltage_min_path):
+                self._psu_voltage_min = psu_voltage_min_path
+            else:
+                self._psu_voltage_min = None
 
         return self._psu_voltage_min
 
     @property
     def psu_voltage_max(self):
-        if not self._psu_voltage_max:
-            psu_voltage = self.psu_voltage
-            if psu_voltage:
-                self._psu_voltage_max = psu_voltage + "_max"
+        if self.psu_voltage:
+            psu_voltage_max_path = self.psu_voltage + "_max"
+            if os.path.exists(psu_voltage_max_path):
+                self._psu_voltage_max = psu_voltage_max_path
+            else:
+                self._psu_voltage_max = None
 
         return self._psu_voltage_max
 
     @property
     def psu_voltage_capability(self):
-        if not self._psu_voltage_capability:
-            psu_voltage = self.psu_voltage
-            if psu_voltage:
-                self._psu_voltage_capability = psu_voltage + "_capability"
+        if self.psu_voltage:
+            psu_volt_cap_path = self.psu_voltage + "_capability"
+            if os.path.exists(psu_volt_cap_path):
+                self._psu_voltage_capability = psu_volt_cap_path
+            else:
+                self._psu_voltage_capability = None
 
         return self._psu_voltage_capability
 
